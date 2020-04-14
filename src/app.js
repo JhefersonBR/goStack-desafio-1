@@ -8,6 +8,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+function validateUpdate(request, response, next) {
+  if (request.method.toUpperCase() == "PUT" && (request.body.likes) ) {
+      return response.status(400).json({ likes: 0 })
+  }
+  return next();
+}
+
+app.use(validateUpdate);
+
 const repositories = [];
 
 app.post("/repositories", (request, response) => {
